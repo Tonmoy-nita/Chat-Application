@@ -8,6 +8,7 @@ const avatarUpload = require("../middlewares/users/avatarUpload.js");
 const {
   addUserValidators,
   addUserValidationHandler,
+  addUser,
 } = require("../middlewares/users/userValidators.js");
 
 const router = express.Router();
@@ -16,7 +17,13 @@ const router = express.Router();
 router.get("/", decorateHtmlResponse("Users"), getUsers);
 
 //add user
-router.post("/", avatarUpload, addUserValidators, addUserValidationHandler);
+router.post(
+  "/",
+  avatarUpload,
+  addUserValidators,
+  addUserValidationHandler,
+  addUser
+);
 
 //export routes
 module.exports = router;

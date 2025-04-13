@@ -38,7 +38,7 @@ function uploader(
       fileSize: max_file_size,
     },
     fileFilter: (req, res, cb) => {
-      if (allowed_file_types.include(file.minetype)) {
+      if (allowed_file_types.includes(file.minetype)) {
         cb(null, true);
       } else {
         cb(createError(error_msg));
@@ -46,7 +46,7 @@ function uploader(
     },
   });
 
-  return uploader;
+  return upload;
 }
 
 module.exports = uploader;

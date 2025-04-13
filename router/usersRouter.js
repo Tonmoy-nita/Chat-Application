@@ -8,8 +8,8 @@ const avatarUpload = require("../middlewares/users/avatarUpload.js");
 const {
   addUserValidators,
   addUserValidationHandler,
-  addUser,
 } = require("../middlewares/users/userValidators.js");
+const { addUser } = require("../controller/usersController.js");
 
 const router = express.Router();
 

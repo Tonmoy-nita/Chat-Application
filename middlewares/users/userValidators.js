@@ -3,6 +3,7 @@ const { check, validationResult } = require("express-validator");
 const createError = require("http-errors");
 const path = require("path");
 const { unlink } = require("fs");
+const User = require("../../models/People");
 
 const addUserValidators = [
   check("name")
@@ -59,7 +60,7 @@ const addUserValidationHandler = function (req, res, next) {
     if (req.files.length > 0) {
       const { filename } = req.files[0];
       unlink(
-        path.join(__dirname, `/public/uploads/avatars/${filename}`),
+        path.join(__dirname, `../../public/uploads/avatars/${filename}`),
         (err) => {
           if (err) console.log(err);
         }

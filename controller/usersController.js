@@ -1,6 +1,9 @@
 //external imports
 const bcrypt = require("bcrypt");
 
+//internal imports
+const User = require("../models/People.js");
+
 //login controller function
 //get users page
 function getUsers(req, res, next) {

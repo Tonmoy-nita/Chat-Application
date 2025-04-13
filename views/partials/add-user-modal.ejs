@@ -53,7 +53,8 @@
     //form submit handler
     form.onsubmit = async function(event) {
         event.preventDefault();
-
+        console.log("Form submitted!");
+        
         //clear errors first
         const errorPlaceHolders = document.querySelectorAll("p.error");
 

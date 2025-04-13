@@ -1,6 +1,7 @@
 //external imports
 const multer = require("multer");
 const path = require("path");
+const createError = require("http-errors");
 
 function uploader(
   subfolder_path,
@@ -9,7 +10,8 @@ function uploader(
   error_msg
 ) {
   //file upload folder(jodi file upload e kono somosha hoi then ekhane ase check korte hobe)
-  const UPLOADS_FOLDER = `${__dirname}/../../public/uploads/${subfolder_path}`;
+  
+  const UPLOADS_FOLDER = `${__dirname}/../public/uploads/${subfolder_path}`;
 
   //define the storage
   const storage = multer.diskStorage({
@@ -37,8 +39,8 @@ function uploader(
     limits: {
       fileSize: max_file_size,
     },
-    fileFilter: (req, res, cb) => {
-      if (allowed_file_types.includes(file.minetype)) {
+    fileFilter: (req, file, cb) => {
+      if (allowed_file_types.includes(file.mimetype)) {
         cb(null, true);
       } else {
         cb(createError(error_msg));

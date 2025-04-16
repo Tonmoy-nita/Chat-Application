@@ -2,14 +2,17 @@
 const express = require("express");
 
 //internal impports
-const { getUsers } = require("../controller/usersController.js");
+const {
+  getUsers,
+  addUser,
+  removeUser,
+} = require("../controller/usersController.js");
 const decorateHtmlResponse = require("../middlewares/common/decorateHtmlResponse.js");
 const avatarUpload = require("../middlewares/users/avatarUpload.js");
 const {
   addUserValidators,
   addUserValidationHandler,
 } = require("../middlewares/users/userValidators.js");
-const { addUser } = require("../controller/usersController.js");
 
 const router = express.Router();
 
@@ -25,5 +28,6 @@ router.post(
   addUser
 );
 
+router.delete("/:id", removeUser);
 //export routes
 module.exports = router;

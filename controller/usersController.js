@@ -67,7 +67,11 @@ async function removeUser(req, res, next) {
         }
       );
     }
+    res.status(200).json({
+      message: "User removed successfully!",
+    });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       error: {
         common: {

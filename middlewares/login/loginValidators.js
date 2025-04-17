@@ -1,7 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const doLoginValidators = [
-  check("name")
+  check("username")
     .isLength({ min: 1 })
     .withMessage("Mobile number or emmail is required"),
   check("password").isLength({ min: 1 }).withMessage("Password is required"),
@@ -15,7 +15,7 @@ const doLoginValidationHandler = function (req, res, next) {
   } else {
     res.render("index", {
       data: {
-        username: req.body.name,
+        username: req.body.username,
       },
       errors: mappedErrors,
     });

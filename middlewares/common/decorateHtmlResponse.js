@@ -4,7 +4,7 @@ function decorateHtmlResponse(page_title) {
     res.locals.title = `${page_title}-${process.env.APP_NAME}`;
     res.locals.loggedInUser = {};
     res.locals.errors = {};
-    res.local.data = {};
+    res.locals.data = {};
     next();
   };
 }

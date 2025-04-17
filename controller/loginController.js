@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 
 //internal imports
-const { User } = require("../models/People.js");
+const User = require("../models/People.js");
 
 //login controller function
 
@@ -16,7 +16,7 @@ async function login(req, res, next) {
   try {
     //find a user who has this email/username
     const user = await User.findOne({
-      $or: [{ email: req.body.username }, { phone: req.body.username }],
+      $or: [{ email: req.body.username }, { mobile: req.body.username }],
     });
     //jodi user valid hoi abong database e user r data store thake orthat valid user with user._id
     if (user && user._id) {
@@ -67,14 +67,20 @@ async function login(req, res, next) {
       },
       errors: {
         common: {
-          message: err.message, //display the error message
+          msg: err.message, //display the error message
         },
       },
     });
   }
 }
 
+function logout(req, res) {
+  //clear the cookie
+  res.clearCookie(process.env.COOKIE_NAME);
+  res.send("logged out");
+}
 module.exports = {
   getLogin,
   login,
+  logout,
 };

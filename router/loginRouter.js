@@ -11,11 +11,18 @@ const {
 
 const router = express.Router();
 
+const page_title = "Login";
 //login page
-router.get("/", decorateHtmlResponse("Login"), getLogin);
+router.get("/", decorateHtmlResponse(page_title), getLogin);
 
 //process login
-router.post("/", doLoginValidators, doLoginValidationHandler, login);
+router.post(
+  "/",
+  decorateHtmlResponse(page_title),
+  doLoginValidators,
+  doLoginValidationHandler,
+  login
+);
 
 //export routes
 module.exports = router;

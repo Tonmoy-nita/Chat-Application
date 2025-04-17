@@ -1,6 +1,7 @@
 //external imports
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const createError = require("http-errors");
 
 //internal imports
 const { User } = require("../models/People.js");
@@ -46,14 +47,30 @@ async function login(req, res, next) {
           signed: true,
         });
 
-        // res.locals.loggedInUser = userObject;
+        res.locals.loggedInUser = userObject;
+
+        res.render("inbox");
       } else {
+        throw createError("Login failed! please try again");
       }
     } else {
+      throw createError("User not found");
     }
-  } catch (err) {}
+  } catch (err) {
+    res.render("index", {
+      data: {
+        username: req.body.username,
+      },
+      errors: {
+        common: {
+          message: err.message, //display the error message
+        },
+      },
+    });
+  }
 }
 
 module.exports = {
   getLogin,
+  login,
 };

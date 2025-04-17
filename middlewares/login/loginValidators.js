@@ -1,7 +1,28 @@
-const { check } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
-const doLoginValidators = [];
+const doLoginValidators = [
+  check("name")
+    .isLength({ min: 1 })
+    .withMessage("Mobile number or emmail is required"),
+  check("password").isLength({ min: 1 }).withMessage("Password is required"),
+];
+
+const doLoginValidationHandler = function (req, res, next) {
+  const errors = validationResult(req);
+  const mappedErrors = errors.mapped();
+  if (Object.keys(mappedErrors).length === 0) {
+    next();
+  } else {
+    res.render("index", {
+      data: {
+        username: req.body.name,
+      },
+      errors: mappedErrors,
+    });
+  }
+};
 
 module.exports = {
   doLoginValidators,
+  doLoginValidationHandler,
 };

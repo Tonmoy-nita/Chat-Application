@@ -4,7 +4,7 @@ const { unlink } = require("fs");
 const path = require("path");
 
 // internal imports
-const User = require("../models/People");
+const User = require("../models/People.js");
 
 // get users page
 async function getUsers(req, res, next) {

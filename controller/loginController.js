@@ -1,64 +1,61 @@
-//external imports
+// external imports
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 
-//internal imports
+// internal imports
 const User = require("../models/People.js");
 
-//login controller function
-
+// get login page
 function getLogin(req, res, next) {
   res.render("index");
 }
 
+// do login
 async function login(req, res, next) {
   try {
-    //find a user who has this email/username
+    // find a user who has this email/username
     const user = await User.findOne({
       $or: [{ email: req.body.username }, { mobile: req.body.username }],
     });
-    //jodi user valid hoi abong database e user r data store thake orthat valid user with user._id
+
     if (user && user._id) {
-      //ebar password check hobe ager paoa valid user r database e store password abong login page e enter kora password r sathe
       const isValidPassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
-      //jodi password math hoi then valid user r token generate kora hobe
+
       if (isValidPassword) {
-        //prepare the user object to generate token(JWT token r body)
+        // prepare the user object to generate token
         const userObject = {
+          userid: user._id,
           username: user.name,
-          mobile: user.mobile,
           email: user.email,
-          role: "user",
+          avatar: user.avatar || null,
+          role: user.role || "user",
         };
 
-        //generate token
-        //jwt token r body userObject and signature JWT_SECRET
+        // generate token
         const token = jwt.sign(userObject, process.env.JWT_SECRET, {
           expiresIn: process.env.JWT_EXPIRY,
         });
 
-        // ebar user r login kora hole take authentication token doa hobe jate take onno requrest r jonno bar bar login korte na hoi
-        //seti hobe JWT_TOKEN(token) r madhome abong sei token ti ke user ke pathano hobe cookie r madhome
-        //set cookies
-
+        // set cookie
         res.cookie(process.env.COOKIE_NAME, token, {
           maxAge: process.env.JWT_EXPIRY,
           httpOnly: true,
           signed: true,
         });
 
+        // set logged in user local identifier
         res.locals.loggedInUser = userObject;
 
-        res.render("inbox");
+        res.redirect("inbox");
       } else {
-        throw createError("Login failed! please try again");
+        throw createError("Login failed! Please try again.");
       }
     } else {
-      throw createError("User not found");
+      throw createError("Login failed! Please try again.");
     }
   } catch (err) {
     res.render("index", {
@@ -67,18 +64,19 @@ async function login(req, res, next) {
       },
       errors: {
         common: {
-          msg: err.message, //display the error message
+          msg: err.message,
         },
       },
     });
   }
 }
 
+// do logout
 function logout(req, res) {
-  //clear the cookie
   res.clearCookie(process.env.COOKIE_NAME);
   res.send("logged out");
 }
+
 module.exports = {
   getLogin,
   login,

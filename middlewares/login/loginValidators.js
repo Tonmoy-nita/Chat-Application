@@ -2,8 +2,10 @@ const { check, validationResult } = require("express-validator");
 
 const doLoginValidators = [
   check("username")
-    .isLength({ min: 1 })
-    .withMessage("Mobile number or emmail is required"),
+    .isLength({
+      min: 1,
+    })
+    .withMessage("Mobile number or email is required"),
   check("password").isLength({ min: 1 }).withMessage("Password is required"),
 ];
 

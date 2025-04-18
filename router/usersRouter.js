@@ -16,7 +16,7 @@ const {
   addUserValidationHandler,
 } = require("../middlewares/users/userValidators.js");
 
-const checkLogin = require("../middlewares/common/checkLogin.js");
+const { checkLogin } = require("../middlewares/common/checkLogin.js");
 
 const router = express.Router();
 

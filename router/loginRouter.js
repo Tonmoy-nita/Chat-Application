@@ -2,13 +2,13 @@
 const express = require("express");
 
 // internal imports
-const { getLogin, login, logout } = require("../controller/loginController");
-const decorateHtmlResponse = require("../middlewares/common/decorateHtmlResponse");
+const { getLogin, login, logout } = require("../controller/loginController.js");
+const decorateHtmlResponse = require("../middlewares/common/decorateHtmlResponse.js");
 const {
   doLoginValidators,
   doLoginValidationHandler,
-} = require("../middlewares/login/loginValidators");
-const { redirectLoggedIn } = require("../middlewares/common/checkLogin");
+} = require("../middlewares/login/loginValidators.js");
+const { redirectLoggedIn } = require("../middlewares/common/checkLogin.js");
 
 const router = express.Router();
 

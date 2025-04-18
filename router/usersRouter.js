@@ -7,15 +7,15 @@ const {
   getUsers,
   addUser,
   removeUser,
-} = require("../controller/usersController");
-const decorateHtmlResponse = require("../middlewares/common/decorateHtmlResponse");
-const avatarUpload = require("../middlewares/users/avatarUpload");
+} = require("../controller/usersController.js");
+const decorateHtmlResponse = require("../middlewares/common/decorateHtmlResponse.js");
+const avatarUpload = require("../middlewares/users/avatarUpload.js");
 const {
   addUserValidators,
   addUserValidationHandler,
-} = require("../middlewares/users/userValidators");
+} = require("../middlewares/users/userValidators.js");
 
-const { checkLogin } = require("../middlewares/common/checkLogin");
+const { checkLogin } = require("../middlewares/common/checkLogin.js");
 
 const router = express.Router();
 

@@ -20,7 +20,13 @@ const { checkLogin } = require("../middlewares/common/checkLogin.js");
 const router = express.Router();
 
 // users page
-router.get("/", decorateHtmlResponse("Users"), checkLogin, getUsers);
+router.get(
+  "/",
+  decorateHtmlResponse("Users"),
+  checkLogin,
+  requireRole(["admin"]),
+  getUsers
+);
 
 // add user
 router.post(

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const createError = require("http-errors");
 // auth guard to protect routes that need authentication
 const checkLogin = (req, res, next) => {
   let cookies =
@@ -55,7 +55,7 @@ const redirectLoggedIn = function (req, res, next) {
 //guard to protect routes that need role based authorization
 function requireRole(role) {
   return function (req, res, next) {
-    if (req.user.role && role.include(req.user.role)) {
+    if (req.user.role && role.includes(req.user.role)) {
       next();
     } else {
       if (res.locals.html) {
